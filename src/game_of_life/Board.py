@@ -17,7 +17,7 @@ class Board:
         for i in range(size):
             Board.board.append([])
             for j in range(size):
-                Board.board[i].append(Cell(Board.random(), 0))
+                Board.board[i].append(Cell(Board.random(), 0, j, i))
 
     @staticmethod
     def print_board():
@@ -54,13 +54,13 @@ class Board:
     def check_for_neighbours():
         for i in range(len(Board.board)):
             for j in range(len(Board.board[i])):
-                if Board.board[i][Board.get_correct_cell(j + 1)].alive:
+                if Board.board[i][Board.get_correct_cell(j + 1)].alive:  # right
                     Board.board[i][j].number_of_neighbours = Board.board[i][j].number_of_neighbours + 1
-                if Board.board[i][Board.get_correct_cell(j - 1)].alive:
+                if Board.board[i][Board.get_correct_cell(j - 1)].alive:  # left
                     Board.board[i][j].number_of_neighbours = Board.board[i][j].number_of_neighbours + 1
-                if Board.board[Board.get_correct_cell(i + 1)][j].alive:
+                if Board.board[Board.get_correct_cell(i + 1)][j].alive:  # lower
                     Board.board[i][j].number_of_neighbours = Board.board[i][j].number_of_neighbours + 1
-                if Board.board[Board.get_correct_cell(i - 1)][j].alive:
+                if Board.board[Board.get_correct_cell(i - 1)][j].alive:  # upper
                     Board.board[i][j].number_of_neighbours = Board.board[i][j].number_of_neighbours + 1
                 if Board.board[Board.get_correct_cell(i + 1)][Board.get_correct_cell(j + 1)].alive:  # upper_right
                     Board.board[i][j].number_of_neighbours = Board.board[i][j].number_of_neighbours + 1
@@ -92,3 +92,7 @@ class Board:
         for i in range(len(Board.board)):
             for j in range(len(Board.board[i])):
                 Board.board[i][j].number_of_neighbours = 0
+
+    def life_cycle(self):
+        self.check_for_neighbours()
+        self.update()
