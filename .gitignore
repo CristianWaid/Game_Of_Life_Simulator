@@ -5,3 +5,4 @@
 
 /src/.DS_Store
 /src/__pycache__
+src/game_of_life/__pycache__/

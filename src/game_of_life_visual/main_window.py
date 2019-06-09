@@ -1,3 +1,4 @@
+import time
 from tkinter import *
 
 from src.game_of_life.Board import Board
@@ -73,7 +74,7 @@ def test_update():
     draw_grid(canvas_size, canvas)
 
 
-button_start = Button(root, text="test", width="15", command=lambda: test_update())
+button_start = Button(root, text="update", width="15", command=lambda: test_update())
 
 input_x = Entry(root, width="5")
 input_y = Entry(root, width="5")

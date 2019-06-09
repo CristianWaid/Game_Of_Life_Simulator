@@ -17,7 +17,7 @@ class Board:
         for i in range(size):
             Board.board.append([])
             for j in range(size):
-                Board.board[i].append(Cell(Board.random(), 0, j, i))
+                Board.board[i].append(Cell(False, 0, j, i))
 
     @staticmethod
     def print_board():
