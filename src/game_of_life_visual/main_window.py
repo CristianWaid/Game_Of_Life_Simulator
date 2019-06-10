@@ -1,4 +1,4 @@
-import time
+import timeit
 from tkinter import *
 
 from src.game_of_life.Board import Board
@@ -10,7 +10,7 @@ img = Image("photo", file="icon.png")
 root.call('wm', 'iconphoto', root._w, img)
 
 canvas_size = 600
-grid_size_factor = 30
+grid_size_factor = 20
 
 board = Board(int(canvas_size / grid_size_factor))
 
@@ -69,9 +69,12 @@ def test_rec_id():
 
 
 def test_update():
+    start = timeit.timeit()
     board.life_cycle()
     draw_rects(canvas, canvas_size)
     draw_grid(canvas_size, canvas)
+    end = timeit.timeit()
+    print(end - start)
 
 
 button_start = Button(root, text="update", width="15", command=lambda: test_update())
