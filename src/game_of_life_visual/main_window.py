@@ -1,23 +1,27 @@
-import timeit
+import time
 from tkinter import *
 
 from src.game_of_life.Board import Board
 
 root = Tk()
-root.geometry("650x650")
+# root.geometry("650x650")
+root.attributes('-fullscreen', True)
+root.config(bg="gray")
 root.title("Game of Life")
 img = Image("photo", file="icon.png")
 root.call('wm', 'iconphoto', root._w, img)
 
 canvas_size = 600
-grid_size_factor = 20
+grid_size_factor = 10
 
 board = Board(int(canvas_size / grid_size_factor))
 
-canvas = Canvas(root, width=canvas_size, height=canvas_size)
+canvas = Canvas(root, width=canvas_size, height=canvas_size, bd=0, highlightthickness=0, relief='ridge')
 canvas.config(background="white")
 
 rectangles = []
+
+toggle_auto_update = False
 
 
 def draw_grid(size: int, c: Canvas):
@@ -57,6 +61,15 @@ def draw_rects(c: Canvas, size: int):
             rectangles[i].append(rect)
 
 
+def update_rects(c: Canvas):
+    for i in range(len(rectangles)):
+        for j in range(len(rectangles[i])):
+            if board.board[i][j].alive:
+                c.itemconfig(rectangles[i][j], fill="black")
+            else:
+                c.itemconfig(rectangles[i][j], fill="white")
+
+
 def test_rec_id():
     foo = rectangles[0][0]
     print(foo)
@@ -69,21 +82,33 @@ def test_rec_id():
 
 
 def test_update():
-    start = timeit.timeit()
     board.life_cycle()
-    draw_rects(canvas, canvas_size)
-    draw_grid(canvas_size, canvas)
-    end = timeit.timeit()
-    print(end - start)
+    update_rects(canvas)
 
 
-button_start = Button(root, text="update", width="15", command=lambda: test_update())
+def auto_update():
+    toggle_auto_update = True
+    while toggle_auto_update:
+        test_update()
+        canvas.update_idletasks()
+        canvas.update()
+
+
+def stop_auto_update():
+    toggle_auto_update = False
+
+
+button_start = Button(root, text="update", width="15", command=test_update)
+button_auto_update = Button(root, text="Auto Update", width="15", command=auto_update)
+button_stop_auto_update = Button(root, text="Stop", width="15", command=stop_auto_update)
 
 input_x = Entry(root, width="5")
 input_y = Entry(root, width="5")
 
-canvas.grid(row=0, column=0, columnspan=3)
+canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
 button_start.grid(row=1, column=2)
+button_auto_update.grid(row=1, column=3)
+button_stop_auto_update.grid(row=1, column=4)
 
 canvas.tag_bind("rectangle", "<Button-1>", click_rectangle)
 
