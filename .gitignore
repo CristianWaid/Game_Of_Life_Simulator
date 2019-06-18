@@ -6,3 +6,4 @@
 /src/.DS_Store
 /src/__pycache__
 src/game_of_life/__pycache__/
+src/game_of_life_visual/__pycache__/

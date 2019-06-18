@@ -1,6 +1,4 @@
 class Cell:
-    alive: bool = False
-    number_of_neighbours: int = 0
 
     def __init__(self, alive: bool, number_of_neighbours: int, position_x: int, position_y: int):
         self.alive = alive

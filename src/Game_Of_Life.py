@@ -1,9 +1,12 @@
-from src.game_of_life.Board import Board
+from tkinter import *
 
-test = Board(int(600 / 20))
+from src.game_of_life_visual.main_window import MainWindow
 
-print("Position X: " + str(test.board[29][29].position_x))
-print("Position Y: " + str(test.board[29][29].position_y))
-print("Alive: " + str(test.board[29][29].alive))
-print()
-test.print_board()
+root = Tk()
+root.attributes('-fullscreen', True)
+root.config(bg="gray")
+root.title("Game of Life")
+
+game_of_life = MainWindow(root, 600, 10)
+
+root.mainloop()
