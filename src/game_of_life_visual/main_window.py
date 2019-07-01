@@ -1,6 +1,7 @@
 from tkinter import *
 
 from src.game_of_life.Board import Board
+from src.game_of_life_visual.options_component import OptionsComponent
 
 
 class MainWindow:
@@ -19,30 +20,22 @@ class MainWindow:
 
         self.canvas = Canvas(master, width=self.canvas_size, height=self.canvas_size, bd=0, highlightthickness=0,
                              relief='ridge')
-        self.button_lifecycle = Button(master, text="update", width="15", command=self.lifecycle)
-        self.button_auto_lifecycle = Button(master, text="Auto Update", width="15", command=self.auto_lifecycle)
-        self.button_stop_auto_lifecycle = Button(master, text="Stop", width="15", command=self.stop_auto_lifecycle)
-        self.label_generation = Label(master, text=self.board.generation)
-        self.label_population = Label(master, text=self.board.population)
 
         self.canvas.config(background="white")
         self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
-        self.button_lifecycle.pack()
-        self.button_auto_lifecycle.pack()
-        self.button_stop_auto_lifecycle.pack()
-        self.label_generation.pack()
-        self.label_population.pack()
 
         self.canvas.tag_bind("rectangle", "<Button-1>", self.handle_rectangle_click)
+
+        self.options = OptionsComponent(master, self.lifecycle, self.auto_lifecycle, self.stop_auto_lifecycle)
 
         self.draw_rectangles()
         self.draw_grid()
 
     def draw_grid(self):
-        for i in range(int(self.canvas_size / self.grid_size_factor)):
+        for i in range(1, int(self.canvas_size / self.grid_size_factor)):
             self.canvas.create_line((i * self.grid_size_factor), 0, (i * self.grid_size_factor), self.canvas_size,
                                     width=1)
-            for j in range(int(self.canvas_size / self.grid_size_factor)):
+            for j in range(1, int(self.canvas_size / self.grid_size_factor)):
                 self.canvas.create_line(0, (i * self.grid_size_factor), self.canvas_size, (i * self.grid_size_factor),
                                         width=1)
 
@@ -69,9 +62,13 @@ class MainWindow:
             if self.canvas.itemcget(CURRENT, "fill") == "black":
                 self.canvas.itemconfig(CURRENT, fill="white")
                 self.board.board[i][j].alive = False
+                self.board.population -= 1
+                self.update_label()
             else:
                 self.canvas.itemconfig(CURRENT, fill="black")
                 self.board.board[i][j].alive = True
+                self.board.population += 1
+                self.update_label()
 
     def update_rectangles(self):
         for i in range(len(self.rectangles)):
@@ -84,9 +81,7 @@ class MainWindow:
     def lifecycle(self):
         self.board.life_cycle()
         self.update_rectangles()
-        self.label_generation.config(text=self.board.generation)
-        self.label_population.config(text=self.board.population)
-        print(self.board.population)
+        self.update_label()
 
     def auto_lifecycle(self):
         self.toggle_auto_update = True
@@ -97,3 +92,7 @@ class MainWindow:
 
     def stop_auto_lifecycle(self):
         self.toggle_auto_update = False
+
+    def update_label(self):
+        self.options.label_generation.config(text="Generation: " + str(self.board.generation))
+        self.options.label_population.config(text="Population: " + str(self.board.population))
