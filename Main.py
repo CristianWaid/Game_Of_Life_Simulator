@@ -3,7 +3,8 @@ from tkinter import *
 from src.game_of_life_visual.main_window import MainWindow
 
 root = Tk()
-root.attributes('-fullscreen', True)
+#root.attributes('-fullscreen', True)
+#root.geometry("500x500")
 root.config(bg="white")
 root.title("Game of Life")
 

@@ -1,3 +1,4 @@
+import time
 from tkinter import *
 
 from src.game_of_life.Board import Board
@@ -18,15 +19,18 @@ class MainWindow:
 
         self.board = Board(int(self.canvas_size / self.grid_size_factor))
 
-        self.canvas = Canvas(master, width=self.canvas_size, height=self.canvas_size, bd=0, highlightthickness=0,
-                             relief='ridge')
+        self.canvas = Canvas(master, width=self.canvas_size, height=self.canvas_size, bd=0, highlightthickness=2,
+                             relief=FLAT, highlightbackground="gray")
 
         self.canvas.config(background="white")
-        self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
+        # self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
+        # self.canvas.grid(row=2, column=2, columnspan=2, rowspan=2,
+        #                  sticky=W + E + N + S, padx=5, pady=5)
 
         self.canvas.tag_bind("rectangle", "<Button-1>", self.handle_rectangle_click)
 
         self.options = OptionsComponent(master, self.lifecycle, self.auto_lifecycle, self.stop_auto_lifecycle)
+        self.canvas.pack(pady=20, padx=20)
 
         self.draw_rectangles()
         self.draw_grid()
@@ -85,13 +89,16 @@ class MainWindow:
 
     def auto_lifecycle(self):
         self.toggle_auto_update = True
+        self.options.scale_update_sleep_time.grid_forget()
         while self.toggle_auto_update:
             self.lifecycle()
             self.canvas.update_idletasks()
             self.canvas.update()
+            time.sleep(float(self.options.scale_update_sleep_time.get()))
 
     def stop_auto_lifecycle(self):
         self.toggle_auto_update = False
+        self.options.scale_update_sleep_time.grid(column=2, row=2)
 
     def update_label(self):
         self.options.label_generation.config(text="Generation: " + str(self.board.generation))
