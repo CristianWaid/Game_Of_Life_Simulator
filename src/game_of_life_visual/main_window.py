@@ -12,24 +12,26 @@ class MainWindow:
         self.canvas_size = canvas_size
         self.grid_size_factor = grid_size_factor
 
+        self.rectangles = []
+        self.toggle_auto_update = False
+
+        self.board = Board(int(self.canvas_size / self.grid_size_factor))
+
         self.canvas = Canvas(master, width=self.canvas_size, height=self.canvas_size, bd=0, highlightthickness=0,
                              relief='ridge')
         self.button_lifecycle = Button(master, text="update", width="15", command=self.lifecycle)
         self.button_auto_lifecycle = Button(master, text="Auto Update", width="15", command=self.auto_lifecycle)
         self.button_stop_auto_lifecycle = Button(master, text="Stop", width="15", command=self.stop_auto_lifecycle)
+        self.label_generation = Label(master, text=self.board.generation)
 
         self.canvas.config(background="white")
         self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
         self.button_lifecycle.pack()
         self.button_auto_lifecycle.pack()
         self.button_stop_auto_lifecycle.pack()
+        self.label_generation.pack()
 
         self.canvas.tag_bind("rectangle", "<Button-1>", self.handle_rectangle_click)
-
-        self.rectangles = []
-        self.toggle_auto_update = False
-
-        self.board = Board(int(self.canvas_size / self.grid_size_factor))
 
         self.draw_rectangles()
         self.draw_grid()
@@ -80,6 +82,8 @@ class MainWindow:
     def lifecycle(self):
         self.board.life_cycle()
         self.update_rectangles()
+        self.label_generation.config(text=self.board.generation)
+        print(self.board.generation)
 
     def auto_lifecycle(self):
         self.toggle_auto_update = True
