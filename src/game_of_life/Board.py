@@ -9,6 +9,7 @@ class Board:
         self.board = self.generate_board(size)
         self.size = size
         self.generation = 0
+        self.population = 0
 
     @staticmethod
     def generate_board(size: int):
@@ -80,6 +81,8 @@ class Board:
                         self.board[i][j].alive = True
                     if self.board[i][j].number_of_neighbours > 3:
                         self.board[i][j].alive = False
+                    if self.board[i][j].alive:
+                        self.population += 1
         self.generation += 1
         self.reset_neighbours()
 
@@ -89,5 +92,6 @@ class Board:
                 self.board[i][j].number_of_neighbours = 0
 
     def life_cycle(self):
+        self.population = 0
         self.check_for_neighbours()
         self.update()

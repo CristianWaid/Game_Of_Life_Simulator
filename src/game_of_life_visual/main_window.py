@@ -23,6 +23,7 @@ class MainWindow:
         self.button_auto_lifecycle = Button(master, text="Auto Update", width="15", command=self.auto_lifecycle)
         self.button_stop_auto_lifecycle = Button(master, text="Stop", width="15", command=self.stop_auto_lifecycle)
         self.label_generation = Label(master, text=self.board.generation)
+        self.label_population = Label(master, text=self.board.population)
 
         self.canvas.config(background="white")
         self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
@@ -30,6 +31,7 @@ class MainWindow:
         self.button_auto_lifecycle.pack()
         self.button_stop_auto_lifecycle.pack()
         self.label_generation.pack()
+        self.label_population.pack()
 
         self.canvas.tag_bind("rectangle", "<Button-1>", self.handle_rectangle_click)
 
@@ -83,7 +85,8 @@ class MainWindow:
         self.board.life_cycle()
         self.update_rectangles()
         self.label_generation.config(text=self.board.generation)
-        print(self.board.generation)
+        self.label_population.config(text=self.board.population)
+        print(self.board.population)
 
     def auto_lifecycle(self):
         self.toggle_auto_update = True
