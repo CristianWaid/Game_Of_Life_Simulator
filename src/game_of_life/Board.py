@@ -83,8 +83,8 @@ class Board:
                         self.board[i][j].alive = False
                     if self.board[i][j].alive:
                         self.population += 1
+                self.board[i][j].number_of_neighbours = 0
         self.generation += 1
-        self.reset_neighbours()
 
     def reset_neighbours(self):
         for i in range(len(self.board)):
