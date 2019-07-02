@@ -90,10 +90,10 @@ class MainWindow:
             self.lifecycle()
             self.canvas.update_idletasks()
             self.canvas.update()
+        self.options.scale_update_sleep_time.grid(column=0, row=4)
 
     def stop_auto_lifecycle(self):
         self.toggle_auto_update = False
-        self.options.scale_update_sleep_time.grid(column=0, row=4)
 
     def update_label(self):
         self.options.label_generation.config(text="Generation: " + str(self.board.generation))
