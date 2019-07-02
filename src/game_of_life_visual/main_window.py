@@ -34,11 +34,9 @@ class MainWindow:
 
     def draw_grid(self):
         for i in range(1, int(self.canvas_size / self.grid_size_factor)):
-            self.canvas.create_line((i * self.grid_size_factor), 0, (i * self.grid_size_factor), self.canvas_size,
-                                    width=1)
+            self.canvas.create_line((i * self.grid_size_factor), 0, (i * self.grid_size_factor), self.canvas_size, width=1)
             for j in range(1, int(self.canvas_size / self.grid_size_factor)):
-                self.canvas.create_line(0, (i * self.grid_size_factor), self.canvas_size, (i * self.grid_size_factor),
-                                        width=1)
+                self.canvas.create_line(0, (i * self.grid_size_factor), self.canvas_size, (i * self.grid_size_factor), width=1)
 
     def draw_rectangles(self):
         for i in range(int(self.canvas_size / self.grid_size_factor)):
