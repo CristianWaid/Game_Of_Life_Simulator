@@ -17,7 +17,10 @@ class OptionsComponent:
                         "30x30": 20,
                         "20x20": 30,
                         "10x10": 60
-                        }  # 10=50x50, 20=25x25 (500)
+                        }
+
+        self.icon_button_play = PhotoImage("icons/button_play.gif")
+
         self.tk_var = StringVar(master)
         self.tk_var.set("60x60")
 
