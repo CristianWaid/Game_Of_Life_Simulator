@@ -8,7 +8,7 @@ class OptionsComponent:
         frame.grid()
 
         self.choices = {'60x60': 10,
-                        '40x40': 25,
+                        '40x40': 15,
                         "30x30": 20,
                         "20x20": 30,
                         "10x10": 60
