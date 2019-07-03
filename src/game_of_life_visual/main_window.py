@@ -29,6 +29,8 @@ class MainWindow:
         self.options = OptionsComponent(master, self.lifecycle, self.auto_lifecycle, self.stop_auto_lifecycle,
                                         self.change_board_size, self.reset_board)
 
+        master.bind("<Button 1>", self.get_coordinates)
+
         self.draw_rectangles()
         self.draw_grid()
 
@@ -113,3 +115,9 @@ class MainWindow:
         self.draw_rectangles()
         self.draw_grid()
         self.update_label()
+
+    @staticmethod
+    def get_coordinates(event):
+        x0 = event.x
+        y0 = event.y
+        print("X: " + str(x0) + " Y: " + str(y0))
