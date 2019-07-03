@@ -22,7 +22,8 @@ class MainWindow:
         self.canvas = Canvas(master, width=self.canvas_size, height=self.canvas_size, bd=0, highlightthickness=2,
                              relief=FLAT, highlightbackground="gray", background="white")
 
-        self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
+        # self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
+        self.canvas.place(x=200, y=70)
 
         self.canvas.tag_bind("rectangle", "<Button-1>", self.handle_rectangle_click)
 
@@ -86,13 +87,13 @@ class MainWindow:
 
     def auto_lifecycle(self):
         self.toggle_auto_update = True
-        self.options.scale_update_sleep_time.grid_forget()
+        self.options.toggle_scale_view()
         while self.toggle_auto_update and self.board.population != 0:
             time.sleep(float(self.options.scale_update_sleep_time.get()))
             self.lifecycle()
             self.canvas.update_idletasks()
             self.canvas.update()
-        self.options.scale_update_sleep_time.grid(column=0, row=4)
+        self.options.toggle_scale_view()
 
     def stop_auto_lifecycle(self):
         self.toggle_auto_update = False
