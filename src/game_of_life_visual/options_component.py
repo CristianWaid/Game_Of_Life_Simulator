@@ -31,27 +31,30 @@ class OptionsComponent:
         self.button_reset = Button(master, text="reset", command=reset_board)
         self.button_set_board_size = Button(master, text="apply", command=lambda: change_board_size(20))
         self.button_information = Button(master, image=self.icon_button_information, command=self.open_wikipedia, highlightthickness=0, bd=0)
-        self.scale_update_sleep_time = Scale(from_=0, to=2, orient=HORIZONTAL, resolution=0.1, font=("4", 10), length=130)
+
         self.label_generation = Label(master, text="Generation: 0")
         self.label_population = Label(master, text="Population: 0")
         self.label_sleep_time = Label(master, text="sleeptime (in sec.)", font=("4", 10))
         self.option_menu_board_size = OptionMenu(master, self.tk_var, *self.choices)
 
-        self.scale_update_sleep_time.set(1)
-
-        self.button_lifecycle.image = self.icon_button_lifecycle
+        self.scale_update_sleep_time = Scale(from_=0, to=2, orient=HORIZONTAL, resolution=0.1, font=("4", 10), length=130)
 
         self.button_lifecycle.place(x=420, y=660)
         self.button_auto_lifecycle.place(x=360, y=660)
         self.button_stop_auto_lifecycle.place(x=390, y=660)
         self.button_reset.place(x=550, y=690, height=25, width=100)
-        self.scale_update_sleep_time.place(x=338, y=690)
-        self.label_generation.place(x=200, y=20)
-        self.label_population.place(x=500, y=20)
-        self.option_menu_board_size.place(x=150, y=660, height=25, width=100)
         self.button_set_board_size.place(x=150, y=690, height=25, width=100)
         self.button_information.place(x=745, y=695)
+
+        self.label_generation.place(x=200, y=20)
+        self.label_population.place(x=500, y=20)
         self.label_sleep_time.place(x=355, y=730)
+
+        self.scale_update_sleep_time.place(x=338, y=690)
+
+        self.option_menu_board_size.place(x=150, y=660, height=25, width=100)
+
+        self.scale_update_sleep_time.set(1)
 
     def get_board_size(self):
         return self.choices.get(self.tk_var.get())
