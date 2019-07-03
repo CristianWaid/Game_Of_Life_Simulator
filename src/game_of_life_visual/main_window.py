@@ -22,8 +22,7 @@ class MainWindow:
         self.canvas = Canvas(master, width=self.canvas_size, height=self.canvas_size, bd=0, highlightthickness=2,
                              relief=FLAT, highlightbackground="gray", background="white")
 
-        # self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
-        self.canvas.place(x=200, y=70)
+        self.canvas.place(x=100, y=50)
 
         self.canvas.tag_bind("rectangle", "<Button-1>", self.handle_rectangle_click)
 

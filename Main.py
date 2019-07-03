@@ -4,7 +4,7 @@ from src.game_of_life_visual.main_window import MainWindow
 
 root = Tk()
 # root.attributes('-fullscreen', True)
-root.geometry("1000x770")
+root.geometry("800x750")
 root.config(bg="white")
 root.resizable(False, False)
 root.title("Game of Life")
