@@ -113,7 +113,7 @@ class MainWindow:
         self.draw_rectangles()
         self.draw_grid()
 
-    # resets board and all labels
+    # resets board and population + generation labels
     def reset_board(self):
         self.stop_auto_lifecycle()
         self.board = Board(int(self.canvas_size // self.grid_size_factor))
