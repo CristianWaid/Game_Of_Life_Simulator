@@ -62,12 +62,12 @@ class MainWindow:
                 self.canvas.itemconfig(CURRENT, fill="white")
                 self.board.board[i][j].alive = False
                 self.board.population -= 1
-                self.update_label()
+                self.options.update_label(self.board.population, self.board.generation)
             else:
                 self.canvas.itemconfig(CURRENT, fill="black")
                 self.board.board[i][j].alive = True
                 self.board.population += 1
-                self.update_label()
+                self.options.update_label(self.board.population, self.board.generation)
 
     def update_rectangles(self):
         for i in range(len(self.rectangles)):
@@ -80,7 +80,7 @@ class MainWindow:
     def lifecycle(self):
         self.board.life_cycle()
         self.update_rectangles()
-        self.update_label()
+        self.options.update_label(self.board.population, self.board.generation)
 
     def auto_lifecycle(self):
         self.toggle_auto_update = True
@@ -95,10 +95,6 @@ class MainWindow:
     def stop_auto_lifecycle(self):
         self.toggle_auto_update = False
 
-    def update_label(self):
-        self.options.label_generation.config(text="Generation: " + str(self.board.generation))
-        self.options.label_population.config(text="Population: " + str(self.board.population))
-
     def change_board_size(self, grid_size_factor):
         self.grid_size_factor = self.options.get_board_size()
         self.board = Board(self.canvas_size // self.grid_size_factor)
@@ -112,4 +108,4 @@ class MainWindow:
         self.rectangles = []
         self.draw_rectangles()
         self.draw_grid()
-        self.update_label()
+        self.options.update_label(self.board.population, self.board.generation)

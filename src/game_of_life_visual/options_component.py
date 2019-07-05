@@ -28,8 +28,8 @@ class OptionsComponent:
         self.button_lifecycle = Button(master, image=self.icon_button_lifecycle, bg="white", command=lifecycle, highlightthickness=0, bd=0)
         self.button_auto_lifecycle = Button(master, image=self.icon_button_auto_lifecycle, command=auto_lifecycle, highlightthickness=0, bd=0)
         self.button_stop_auto_lifecycle = Button(master, image=self.icon_button_stop_auto_lifecycle, command=stop_auto_lifecycle, highlightthickness=0, bd=0)
-        self.button_reset = Button(master, text="reset", command=reset_board)
-        self.button_set_board_size = Button(master, text="apply", command=lambda: change_board_size(20))
+        self.button_reset = Button(master, text="reset", command=reset_board, highlightthickness=0, bd=0)
+        self.button_set_board_size = Button(master, text="apply", command=lambda: change_board_size(20), highlightthickness=0, bd=0)
         self.button_information = Button(master, image=self.icon_button_information, command=self.open_wikipedia, highlightthickness=0, bd=0)
 
         self.label_generation = Label(master, text="Generation: 0")
@@ -62,6 +62,10 @@ class OptionsComponent:
     @staticmethod
     def open_wikipedia():
         webbrowser.open("https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life")
+
+    def update_label(self, population: int, generation: int):
+        self.label_generation.config(text="Generation: " + str(generation))
+        self.label_population.config(text="Population: " + str(population))
 
     def toggle_scale_view(self):
         if self.scale_is_shown:
