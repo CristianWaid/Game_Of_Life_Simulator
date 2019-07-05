@@ -1,16 +1,15 @@
-import random
-
-from src.game_of_life.Cell import Cell
+from src.game_of_life.cell import Cell
 
 
 class Board:
 
     def __init__(self, size: int):
         self.board = self.generate_board(size)
-        self.size = size
-        self.generation = 0
-        self.population = 0
+        self.size = size  # size of the board
+        self.generation = 0  # current generation
+        self.population = 0  # current population
 
+    # generates a board with "dead" Cells (called in "__init__" method)
     @staticmethod
     def generate_board(size: int):
         board = []
@@ -20,6 +19,7 @@ class Board:
                 board[i].append(Cell(False, 0, j, i))
         return board
 
+    # prints the board to the console (replaced by Tkinter GUI, useful for debugging)
     def print_board(self):
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
@@ -29,18 +29,15 @@ class Board:
                     print("O", end=" ")
             print()
 
+    # prints number of neighbours for each Cell (for debugging)
     def print_board_neighbours(self):
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 print(str(self.board[i][j].number_of_neighbours) + " ", end=" ")
             print()
 
-    @staticmethod
-    def random():
-        return bool(random.getrandbits(1))
-
+    # returns a valid list index (to avoid index out of bounds)
     def get_correct_cell(self, cell_to_check: int):
-
         if cell_to_check < 0:
             return len(self.board) - 1
         elif cell_to_check == len(self.board):
@@ -48,6 +45,7 @@ class Board:
         else:
             return cell_to_check
 
+    # count and set number of alive Cells for each Cell in 2D-List
     def check_for_neighbours(self):
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
@@ -68,6 +66,9 @@ class Board:
                 if self.board[self.get_correct_cell(i + 1)][self.get_correct_cell(j - 1)].alive:  # upper_left
                     self.board[i][j].number_of_neighbours = self.board[i][j].number_of_neighbours + 1
 
+    # implementation of the Game of Life rules
+    # updates the board (sets Cells to alive = True || alive = False & resets the number of neighbours)
+    # counts population and generation
     def update(self):
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
@@ -86,11 +87,7 @@ class Board:
                 self.board[i][j].number_of_neighbours = 0
         self.generation += 1
 
-    def reset_neighbours(self):
-        for i in range(len(self.board)):
-            for j in range(len(self.board[i])):
-                self.board[i][j].number_of_neighbours = 0
-
+    # simulates a whole lifecycle
     def life_cycle(self):
         self.population = 0
         self.check_for_neighbours()
