@@ -1,6 +1,7 @@
 from src.game_of_life.cell import Cell
 
 
+# represents the board of the Game of Life Simulation
 class Board:
 
     def __init__(self, size: int):
