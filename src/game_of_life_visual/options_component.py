@@ -3,10 +3,18 @@ from tkinter import *
 
 
 class OptionsComponent:
-    # manages all the options available in the Tkinter GUI
-    # all event-listener are given trough props
 
     def __init__(self, master, lifecycle, auto_lifecycle, stop_auto_lifecycle, change_board_size, reset_board):
+        """
+        manages all the options available in the Tkinter GUI
+        :param master: master (or root) window, where the main window should be placed
+        :param lifecycle: event_listener for lifecycle Button
+        :param auto_lifecycle: event_listener for auto_lifecycle Button
+        :param stop_auto_lifecycle: event_listener for stop_auto_lifecycle Button
+        :param change_board_size: event_listener for apply_board_size
+        :param reset_board: event_listener for reset_board Button
+        """
+
         frame = Frame(master)
         frame.grid()
 
@@ -36,7 +44,7 @@ class OptionsComponent:
         self.button_auto_lifecycle = Button(master, image=self.icon_button_auto_lifecycle, command=auto_lifecycle, highlightthickness=0, bd=0)
         self.button_stop_auto_lifecycle = Button(master, image=self.icon_button_stop_auto_lifecycle, command=stop_auto_lifecycle, highlightthickness=0, bd=0)
         self.button_reset = Button(master, text="reset", command=reset_board, highlightthickness=0, bd=0)
-        self.button_set_board_size = Button(master, text="apply", command=lambda: change_board_size(20), highlightthickness=0, bd=0)
+        self.button_apply_board_size = Button(master, text="apply", command=lambda: change_board_size(), highlightthickness=0, bd=0)
         self.button_information = Button(master, image=self.icon_button_information, command=self.open_wikipedia, highlightthickness=0, bd=0)
 
         # initialize labels
@@ -55,7 +63,7 @@ class OptionsComponent:
         self.button_auto_lifecycle.place(x=360, y=660)
         self.button_stop_auto_lifecycle.place(x=390, y=660)
         self.button_reset.place(x=550, y=690, height=25, width=100)
-        self.button_set_board_size.place(x=150, y=690, height=25, width=100)
+        self.button_apply_board_size.place(x=150, y=690, height=25, width=100)
         self.button_information.place(x=745, y=695)
 
         self.label_generation.place(x=200, y=20)
@@ -68,22 +76,36 @@ class OptionsComponent:
 
         self.scale_update_sleep_time.set(1)
 
-    # returns current chosen board size
     def get_board_size(self):
+        """
+        returns current selected board size from choices dictionary
+        :return: selected board size (int)
+        """
         return self.choices.get(self.tk_var.get())
 
-    # opens wikipedia in browser (for information)
     @staticmethod
     def open_wikipedia():
+        """
+        opens wikipedia in browser (for information)
+        :return: None
+        """
         webbrowser.open("https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life")
 
-    # update the labels with given values
     def update_label(self, population: int, generation: int):
+        """
+        update the labels with given values
+        :param population: value (int) to be shown in label_population
+        :param generation: value (int) to be shown in generation
+        :return: None
+        """
         self.label_generation.config(text="Generation: " + str(generation))
         self.label_population.config(text="Population: " + str(population))
 
-    # toggles visibility of scale and label_sleep_time (to avoid User to change sleep-time while auto simulate)
     def toggle_scale_view(self):
+        """
+        toggles visibility of scale and label_sleep_time (to avoid User to change sleep-time while auto simulate)
+        :return: None
+        """
         if self.scale_is_shown:
             self.scale_update_sleep_time.place_forget()
             self.label_sleep_time.place_forget()
