@@ -119,8 +119,9 @@ class MainWindow:
         auto simulates with given sleep time && stops if population == 0
         :return: None
         """
+        if not self.toggle_auto_update:
+            self.options.toggle_scale_view()
         self.toggle_auto_update = True
-        self.options.toggle_scale_view()
         while self.toggle_auto_update and self.board.population != 0:
             time.sleep(float(self.options.scale_update_sleep_time.get()))
             self.lifecycle()
